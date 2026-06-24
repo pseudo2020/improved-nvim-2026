@@ -12,6 +12,7 @@ vim.opt.mouse = ""
 vim.opt.laststatus = 2
 vim.opt.scrolloff = 12 
 vim.opt.sidescrolloff = 8
+vim.cmd("colorscheme habamax")
 
 -- Search Settings
 vim.opt.ignorecase = true
@@ -43,11 +44,16 @@ vim.g.maplocalleader = " "
 -- Key Mappings
 vim.keymap.set({ "i", "v", "s" }, "<C-k>", "<ESC>", { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>q", ":q<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>w", ":w<CR>")
+vim.keymap.set("n", "<leader>q", ":q<CR>")
 
-vim.keymap.set("n", "<leader>h", ":nohl<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>/", ":set incsearch<CR>/", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bn", ":bn<CR>")
+vim.keymap.set("n", "<leader>bp", ":bp<CR>")
+vim.keymap.set("n", "<leader>bc", ":bd<CR>")
+vim.keymap.set("n", "<leader>bd", ":bd!<CR>")
+
+vim.keymap.set("n", "<leader>h", ":nohl<CR>")
+vim.keymap.set("n", "<leader>/", ":set incsearch<CR>/")
 
 -- Make
 vim.opt.makeprg = "make"
@@ -63,8 +69,19 @@ vim.keymap.set("n", "<leader>m", function()
 end)
 
 -- Terminal
-vim.keymap.set("n", "<leader>th", ":split | terminal<CR>")
-vim.keymap.set("n", "<leader>tv", ":vsplit | terminal<CR>")
+vim.keymap.set("n", "<leader>tf", ":terminal<CR>")
+vim.keymap.set("n", "<leader>tt", function()
+	vim.cmd("botright split")
+	vim.cmd("resize 15")
+	vim.cmd("terminal")
+	vim.cmd("startinsert")
+end)
+vim.keymap.set("n", "<leader>tv", function()
+	vim.cmd("botright vsplit")
+	vim.cmd("terminal")
+	vim.cmd("startinsert")
+end)
+vim.keymap.set("n", "<leader>tc", ":bd!<CR>")
 vim.keymap.set("t", "<C-k>", [[<C-\><C-n>]])
 vim.api.nvim_create_autocmd("TermOpen", {
 	pattern = "*",
