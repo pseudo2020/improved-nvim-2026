@@ -92,3 +92,32 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		vim.opt_local.signcolumn = "no"
 	end,
 })
+
+-- Comments
+vim.keymap.set("n", "<leader>l", function()
+	local line = vim.api.nvim_get_current_line()
+	local filetype = vim.bo.filetype
+
+	local comment_map = {
+		lua = "--",
+		python = "#",
+		c = "//",
+		cpp = "//",
+		javascript = "//",
+		typescript = "//",
+		sh = "#",
+		bash = "#",
+		vim = "\"",
+	}
+
+	local comment = comment_map[filetype] or "#"
+
+	if line:match("^%s*" .. vim.pesc(comment)) then
+		-- uncomment
+		local new_line = line:gsub("^%s*" .. vim.pesc(comment) .. "%s?", "", 1)
+		vim.api.nvim_set_current_line(new_line)
+	else
+		-- comment
+		vim.api.nvim_set_current_line(comment .. " " .. line)
+	end
+end)
